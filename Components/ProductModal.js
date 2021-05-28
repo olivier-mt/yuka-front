@@ -13,32 +13,38 @@ export default function ProductModal({
   modalVisible,
   setModalVisible,
   apiData,
+  scanned,
+  setScanned,
 }) {
+  apiData && console.log("code===>", apiData);
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
+      visible={scanned} //{modalVisible}
       onRequestClose={() => {
         Alert.alert("Modal has been closed.");
       }}
     >
-      <View style={styles.centeredView2}>
+      <View style={styles.centeredView}>
         <View style={styles.modalView}>
+          <View style={styles.modalHead}>
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                setScanned(false);
+              }}
+            >
+              <Text style={styles.textStyle}></Text>
+            </TouchableHighlight>
+          </View>
+
           {apiData ? (
-            <Text style={styles.modalText}>Data here!</Text>
+            <Text style={styles.modalText}>{apiData.product.product_name}</Text>
           ) : (
             <Text style={styles.modalText}>Hello World!</Text>
           )}
-
-          <TouchableHighlight
-            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-            onPress={() => {
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <Text style={styles.textStyle}>Hide Modal</Text>
-          </TouchableHighlight>
         </View>
       </View>
     </Modal>
@@ -52,21 +58,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
   },
-  centeredView2: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-    // backgroundColor: "lightgreen",
-  },
+
   modalView: {
     margin: 20,
-
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
-    // width: "100%",
-    //height: "90%",
+    // padding: 35,
+    padding: 20,
+    width: "90%",
+    height: "50%",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -77,12 +77,20 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  modalHead: {
+    backgroundColor: "lightgrey",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
 
   openButton: {
     backgroundColor: "#F194FF",
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    width: 40,
+    height: 40,
   },
   textStyle: {
     color: "white",

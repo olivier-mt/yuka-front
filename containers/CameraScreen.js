@@ -30,9 +30,9 @@ const CameraScreen = () => {
         `https://world.openfoodfacts.org/api/v0/product/${barCode}.json`
       );
 
-      setApiData(response);
+      setApiData(response.data);
 
-      console.log("response", response);
+      // console.log("response", response);
     } catch (error) {
       console.log(error);
     }
@@ -41,7 +41,7 @@ const CameraScreen = () => {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
 
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    //  alert(`Bar code with type ${type} and data ${data} has been scanned!`);
 
     sendrequest(data);
   };
@@ -67,20 +67,22 @@ const CameraScreen = () => {
         barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13]}
       />
       <ProductModal
-        modalVisible={modalVisible}
+        modalVisible={apiData ? true : false} //{modalVisible}
         setModalVisible={setModalVisible}
         apiData={apiData}
+        scanned={scanned}
+        setScanned={setScanned}
       />
-      <Button
+      {/*<Button
         title="Open modal"
         onPress={() => {
           setModalVisible(true);
         }}
-      />
+    />*/}
 
-      {scanned && (
+      {/* scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )}
+      )*/}
     </View>
   );
 };
