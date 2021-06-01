@@ -22,7 +22,7 @@ const CameraScreen = () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
-  }, []);
+  }, [apiData]);
 
   const sendrequest = async (barCode) => {
     try {
@@ -32,7 +32,7 @@ const CameraScreen = () => {
 
       setApiData(response.data);
 
-      // console.log("response", response);
+      console.log("response", response.data.name);
     } catch (error) {
       console.log(error);
     }

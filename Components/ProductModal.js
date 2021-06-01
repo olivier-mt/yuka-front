@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Alert,
   Modal,
@@ -8,6 +8,8 @@ import {
   View,
   ScrollView,
 } from "react-native";
+//import { useEffect } from "react/cjs/react.development";
+import ProductScreen from "../containers/ProductScreen";
 
 export default function ProductModal({
   modalVisible,
@@ -16,7 +18,10 @@ export default function ProductModal({
   scanned,
   setScanned,
 }) {
-  apiData && console.log("code===>", apiData);
+  //apiData && console.log("code===>", apiData);
+
+  // useEffect(() => {}, [scanned]);
+
   return (
     <Modal
       animationType="slide"
@@ -41,9 +46,10 @@ export default function ProductModal({
           </View>
 
           {apiData ? (
-            <Text style={styles.modalText}>{apiData.product.product_name}</Text>
+            //<Text style={styles.modalText}>{apiData.product.product_name}</Text>
+            <ProductScreen apiData={apiData} />
           ) : (
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={styles.modalText}>Please wait...</Text>
           )}
         </View>
       </View>
