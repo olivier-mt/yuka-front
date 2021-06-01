@@ -15,15 +15,12 @@ export default AddToFavorites = ({ article }) => {
   const [inFavorites, setInFavorites] = useState(false);
 
   useEffect(() => {
-    console.log("ARTICLE !!", article);
     const fetchAsyncStorage = async () => {
       const stored = await AsyncStorage.getItem("favorites");
       console.log("stored==>", stored);
       const arrayStored = JSON.parse(stored);
       setFavorites(arrayStored);
       checkFavorites(arrayStored);
-      //console.log(typeof stored, stored);
-      console.log("ARTICLE !!", article);
     };
     fetchAsyncStorage();
   }, [article]);
@@ -44,8 +41,6 @@ export default AddToFavorites = ({ article }) => {
     }
 
     setInFavorites(true);
-
-    console.log("added!");
   };
 
   const remove = async () => {
@@ -61,10 +56,8 @@ export default AddToFavorites = ({ article }) => {
 
         setFavorites(newFavorites);
         setInFavorites(false);
-        console.log("done");
       }
     }
-    //console.log("removed");
   };
 
   const checkFavorites = (arr) => {
@@ -92,8 +85,6 @@ export default AddToFavorites = ({ article }) => {
           {<AntDesign name="staro" size={24} color="black" />}
         </TouchableOpacity>
       )}
-
-      {/*favorites && <Text>{favorites[0].name}</Text>*/}
     </>
   );
 };

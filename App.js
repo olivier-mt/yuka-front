@@ -8,11 +8,11 @@ import {
   MaterialCommunityIcons,
   AntDesign,
 } from "@expo/vector-icons";
-import HomeScreen from "./containers/HomeScreen";
+import ProductsScreen from "./containers/ProductsScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
+import FavoritesScreen from "./containers/FavoritesScreen";
 import CameraScreen from "./containers/CameraScreen";
 import SplashScreen from "./containers/SplashScreen";
 
@@ -86,7 +86,7 @@ export default function App() {
                           headerTitleStyle: { color: "white" },
                         }}
                       >
-                        {() => <HomeScreen />}
+                        {() => <ProductsScreen />}
                       </Stack.Screen>
 
                       <Stack.Screen
@@ -121,7 +121,7 @@ export default function App() {
                 <Tab.Screen
                   name="Favorites"
                   options={{
-                    tabBarLabel: "Favorites",
+                    tabBarLabel: "Favoris",
                     tabBarIcon: ({ color, size }) => (
                       <AntDesign name="staro" size={24} color={color} />
                     ),
@@ -130,10 +130,10 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Settings"
-                        options={{ title: "Settings", tabBarLabel: "Settings" }}
+                        name="Favorites"
+                        options={{ title: "Favoris", tabBarLabel: "Favorites" }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <FavoritesScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

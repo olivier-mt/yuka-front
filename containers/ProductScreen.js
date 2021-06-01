@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 import AddToFavorites from "../Components/AddToFavorites";
 
 export default function ProductScreen({ apiData }) {
@@ -172,6 +172,12 @@ export default function ProductScreen({ apiData }) {
     </View>
   ) : (
     <View>
+      {apiData.product.image_front_small_url && (
+        <Image
+          style={{ height: 200, width: 90 }}
+          source={{ uri: apiData.product.image_front_small_url }}
+        />
+      )}
       <Text style={styles.productScreen}>{apiData.product.product_name}</Text>
       <Text style={styles.productScreen}>{apiData.product.brands}</Text>
       {apiData.product.ecoscore_data.grade &&
@@ -196,6 +202,8 @@ export default function ProductScreen({ apiData }) {
           nutriScore: apiData.product.nutriscore_grade,
           ecoScore: apiData.product.ecoscore_data.grade,
           novaScore: apiData.product.nova_group,
+          code: apiData.code,
+          imageUrl: apiData.product.image_front_small_url,
         }}
       />
     </View>
