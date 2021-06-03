@@ -1,11 +1,57 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import AddToFavorites from "../Components/AddToFavorites";
 
-export default function ProductScreen({ apiData }) {
-  // console.log(apiData);
+export default function ProductScreen({ apiData, route }) {
+  let apiData2 = null;
 
-  // useEffect(() => {}, [apiData]);
+  const setData = () => {
+    if (apiData) {
+      console.log("from scan");
+
+      apiData2 = {
+        name: apiData.product.product_name,
+        brand: apiData.product.brands,
+        nutriScore: apiData.product.nutriscore_grade,
+        ecoScore: apiData.product.ecoscore_data.grade,
+        novaScore: apiData.product.nova_group,
+        code: apiData.code,
+        imageUrl: apiData.product.image_front_small_url,
+      };
+
+      console.log("apiData2==>", "from Api", apiData2);
+      return apiData2;
+    } else if (route.params) {
+      apiData2 = {
+        name: route.params.name,
+        brand: route.params.brand,
+        nutriScore: route.params.nutriScore,
+        ecoScore: route.params.ecoScore,
+        novaScore: route.params.novaScore,
+        code: route.params.code,
+        imageUrl: route.params.imageUrl,
+      };
+
+      console.log("apiData2 ==>", "from scan", apiData2);
+      return apiData2;
+    }
+  };
+  setData();
+
+  const addToProductList = () => {
+    const list = [];
+
+    const addToList = async () => {
+      list.push(apiData2);
+      const strList = JSON.stringify(list);
+      await AsyncStorage.setItem("productList", strList);
+      console.log("!added");
+    };
+    addToList();
+  };
+
+  addToProductList();
 
   const nutriscore = (info) => {
     if (info === "a") {
@@ -166,44 +212,63 @@ export default function ProductScreen({ apiData }) {
     }
   };
 
-  return apiData.status_verbose === "product not found" ? (
+  return apiData && apiData.status_verbose === "product not found" ? (
     <View>
       <Text>Nous n'avons pas d'info sur ce produit</Text>
     </View>
   ) : (
-    <View>
-      {apiData.product.image_front_small_url && (
+    /* <View>
+      {apiData2.product.image_front_small_url && (
         <Image
           style={{ height: 200, width: 90 }}
-          source={{ uri: apiData.product.image_front_small_url }}
+          source={{
+            uri: apiData2.product.image_front_small_url,
+          }}
         />
       )}
-      <Text style={styles.productScreen}>{apiData.product.product_name}</Text>
-      <Text style={styles.productScreen}>{apiData.product.brands}</Text>
-      {apiData.product.ecoscore_data.grade &&
-        /* <Text style={styles.productScreen}>
-          eco score {apiData.product.ecoscore_data.grade}
-        </Text>*/
-        ecoScore(apiData.product.ecoscore_data.grade)}
-      {apiData.product.nova_group &&
-        /*<Text style={styles.productScreen}>
-          transformation {apiData.product.nova_group}
-        </Text>*/
-        novaScore(apiData.product.nova_group)}
-      {apiData.product.nutriscore_grade &&
-        /*<Text style={styles.productScreen}>
-          nutri-score {apiData.product.nutriscore_grade}
-        </Text>*/
-        nutriscore(apiData.product.nutriscore_grade)}
+      <Text style={styles.productScreen}>{apiData2.product.product_name}</Text>
+      <Text style={styles.productScreen}>{apiData2.product.brands}</Text>
+      {apiData2.product.ecoscore_data.grade &&
+        ecoScore(apiData2.product.ecoscore_data.grade)}
+      {apiData2.product.nova_group && novaScore(apiData2.product.nova_group)}
+      {apiData2.product.nutriscore_grade &&
+        nutriscore(apiData2.product.nutriscore_grade)}
       <AddToFavorites
         article={{
-          name: apiData.product.product_name,
-          brand: apiData.product.brands,
-          nutriScore: apiData.product.nutriscore_grade,
-          ecoScore: apiData.product.ecoscore_data.grade,
-          novaScore: apiData.product.nova_group,
-          code: apiData.code,
-          imageUrl: apiData.product.image_front_small_url,
+          name: apiData2.product.product_name,
+          brand: apiData2.product.brands,
+          nutriScore: apiData2.product.nutriscore_grade,
+          ecoScore: apiData2.product.ecoscore_data.grade,
+          novaScore: apiData2.product.nova_group,
+          code: apiData2.code,
+          imageUrl: apiData2.product.image_front_small_url,
+        }}
+      />
+    </View>*/
+    <View>
+      {apiData2.imageUrl && (
+        <Image
+          style={{ height: 200, width: 90 }}
+          source={{
+            uri: apiData2.imageUrl,
+          }}
+        />
+      )}
+      <Text style={styles.productScreen}>{apiData2.name}</Text>
+      <Text style={styles.productScreen}>{apiData2.brand}</Text>
+      {apiData2.ecoScore && ecoScore(apiData2.ecoScore)}
+      {apiData2.novaScore && novaScore(apiData2.novaScore)}
+      {apiData2.nutriScore && nutriscore(apiData2.nutriScore)}
+      <AddToFavorites
+        article={{
+          /*  name: apiData2.product.product_name,
+          brand: apiData2.product.brands,
+          nutriScore: apiData2.product.nutriscore_grade,
+          ecoScore: apiData2.product.ecoscore_data.grade,
+          novaScore: apiData2.product.nova_group,
+          code: apiData2.code,
+          imageUrl: apiData2.product.image_front_small_url,*/
+          ...apiData2,
         }}
       />
     </View>

@@ -15,6 +15,7 @@ import SignUpScreen from "./containers/SignUpScreen";
 import FavoritesScreen from "./containers/FavoritesScreen";
 import CameraScreen from "./containers/CameraScreen";
 import SplashScreen from "./containers/SplashScreen";
+import ProductScreen from "./containers/ProductScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -133,13 +134,17 @@ export default function App() {
                         name="Favorites"
                         options={{ title: "Favoris", tabBarLabel: "Favorites" }}
                       >
-                        {() => <FavoritesScreen />}
+                        {(props) => <FavoritesScreen {...props} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
               </Tab.Navigator>
             )}
+          </Stack.Screen>
+          {/*PRODUCT*/}
+          <Stack.Screen name="Product" options={{ title: "Product" }}>
+            {(props) => <ProductScreen {...props} />}
           </Stack.Screen>
         </Stack.Navigator>
       )}

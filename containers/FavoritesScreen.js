@@ -9,9 +9,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
-export default function Favorites() {
+export default function Favorites({ navigation, route }) {
   const [data, setData] = useState();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,11 +22,7 @@ export default function Favorites() {
       setData(newData);
     };
     fetchData();
-  }, []);
-
-  const seeMore = () => {
-    console.log("see more");
-  };
+  }, [isFocused]);
 
   return data ? (
     <>
@@ -32,7 +30,12 @@ export default function Favorites() {
         data={data}
         keyExtractor={(item) => String(item.code)}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.cell} onPress={seeMore}>
+          <TouchableOpacity
+            style={styles.cell}
+            onPress={() => {
+              navigation.navigate("Product", item);
+            }}
+          >
             <Image style={styles.img} source={{ uri: item.imageUrl }} />
             <View>
               <Text>{item.name}</Text>

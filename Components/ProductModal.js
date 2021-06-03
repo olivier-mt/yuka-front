@@ -18,10 +18,6 @@ export default function ProductModal({
   scanned,
   setScanned,
 }) {
-  //apiData && console.log("code===>", apiData);
-
-  // useEffect(() => {}, [scanned]);
-
   return (
     <Modal
       animationType="slide"
