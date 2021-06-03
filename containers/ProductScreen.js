@@ -33,25 +33,43 @@ export default function ProductScreen({ apiData, route }) {
         imageUrl: route.params.imageUrl,
       };
 
-      console.log("apiData2 ==>", "from scan", apiData2);
+      // console.log("apiData2 ==>", "from scan", apiData2);
       return apiData2;
     }
   };
   setData();
 
   const addToProductList = () => {
-    const list = [];
+    let list = [];
 
     const addToList = async () => {
+      const data = await AsyncStorage.getItem("productList");
+
+      if (data) {
+        const dataArr = JSON.parse(data);
+        list = [...dataArr];
+      }
+
       list.push(apiData2);
       const strList = JSON.stringify(list);
       await AsyncStorage.setItem("productList", strList);
-      console.log("!added");
     };
     addToList();
   };
 
-  addToProductList();
+  const checkProductList = async () => {
+    const data = await AsyncStorage.getItem("productList");
+    const dataArr = JSON.parse(data);
+
+    if (dataArr) {
+      !dataArr.find((elem) => elem.name === apiData2.name) &&
+        addToProductList();
+    } else {
+      addToProductList();
+    }
+  };
+
+  checkProductList();
 
   const nutriscore = (info) => {
     if (info === "a") {

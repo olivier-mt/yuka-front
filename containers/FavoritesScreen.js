@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+import Cell from "../Components/Cell";
 
 export default function Favorites({ navigation, route }) {
   const [data, setData] = useState();
@@ -30,7 +31,7 @@ export default function Favorites({ navigation, route }) {
         data={data}
         keyExtractor={(item) => String(item.code)}
         renderItem={({ item }) => (
-          <TouchableOpacity
+          /* <TouchableOpacity
             style={styles.cell}
             onPress={() => {
               navigation.navigate("Product", item);
@@ -41,7 +42,8 @@ export default function Favorites({ navigation, route }) {
               <Text>{item.name}</Text>
               <Text>{item.brand}</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>*/
+          <Cell item={item} />
         )}
       />
     </>
