@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, FlatList, StyleSheet, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import Cell from "../Components/Cell";
@@ -25,7 +17,7 @@ export default function Favorites({ navigation, route }) {
     fetchData();
   }, [isFocused]);
 
-  return data ? (
+  return data && data.length > 0 ? (
     <>
       <FlatList
         data={data}
@@ -46,10 +38,16 @@ export default function Favorites({ navigation, route }) {
           <Cell item={item} />
         )}
       />
+      <Button
+        title="supprimer favoris"
+        onPress={() => {
+          AsyncStorage.removeItem("favorites");
+        }}
+      ></Button>
     </>
   ) : (
     <View>
-      <Text>Is Loading...</Text>
+      <Text>Ajouter des articles aux favoris</Text>
     </View>
   );
 }

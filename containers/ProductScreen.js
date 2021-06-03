@@ -4,11 +4,14 @@ import { View, Text, StyleSheet, Button, Image } from "react-native";
 import AddToFavorites from "../Components/AddToFavorites";
 
 export default function ProductScreen({ apiData, route }) {
-  let apiData2 = null;
+  //let apiData2 = null;
+  let apiData2 = {};
+
+  console.log("route ==>", route);
 
   const setData = () => {
-    if (apiData) {
-      console.log("from scan");
+    if (apiData && apiData.status_verbose !== "product not found") {
+      // console.log("from scan");
 
       apiData2 = {
         name: apiData.product.product_name,
@@ -20,9 +23,9 @@ export default function ProductScreen({ apiData, route }) {
         imageUrl: apiData.product.image_front_small_url,
       };
 
-      console.log("apiData2==>", "from Api", apiData2);
+      // console.log("apiData2==>", "from Api", apiData2);
       return apiData2;
-    } else if (route.params) {
+    } else if (route) {
       apiData2 = {
         name: route.params.name,
         brand: route.params.brand,
@@ -37,6 +40,7 @@ export default function ProductScreen({ apiData, route }) {
       return apiData2;
     }
   };
+
   setData();
 
   const addToProductList = () => {

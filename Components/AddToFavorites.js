@@ -17,10 +17,13 @@ export default AddToFavorites = ({ article }) => {
   useEffect(() => {
     const fetchAsyncStorage = async () => {
       const stored = await AsyncStorage.getItem("favorites");
-      console.log("stored==>", stored);
-      const arrayStored = JSON.parse(stored);
-      setFavorites(arrayStored);
-      checkFavorites(arrayStored);
+      // console.log("stored==>", stored);
+
+      if (stored) {
+        const arrayStored = JSON.parse(stored);
+        setFavorites(arrayStored);
+        checkFavorites(arrayStored);
+      }
     };
     fetchAsyncStorage();
   }, [article]);
