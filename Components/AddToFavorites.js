@@ -94,7 +94,7 @@ export default AddToFavorites = ({ article }) => {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: "lightpink",
+    backgroundColor: "#EFF0F1",
     flexDirection: "row",
     justifyContent: "space-between",
   },

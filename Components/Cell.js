@@ -14,8 +14,8 @@ export default Cell = ({ item }) => {
     >
       <Image style={styles.img} source={{ uri: item.imageUrl }} />
       <View>
-        <Text>{item.name}</Text>
-        <Text>{item.brand}</Text>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.brand}>{item.brand}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -32,5 +32,14 @@ const styles = StyleSheet.create({
     height: 100,
     width: 80,
     marginRight: 10,
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  brand: {
+    fontWeight: "300",
+    color: "gray",
   },
 });

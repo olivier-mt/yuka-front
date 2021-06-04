@@ -10,6 +10,7 @@ import {
 } from "react-native";
 //import { useEffect } from "react/cjs/react.development";
 import ProductScreen from "../containers/ProductScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ProductModal({
   modalVisible,
@@ -31,13 +32,13 @@ export default function ProductModal({
         <View style={styles.modalView}>
           <View style={styles.modalHead}>
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              // style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
               onPress={() => {
                 setModalVisible(!modalVisible);
                 setScanned(false);
               }}
             >
-              <Text style={styles.textStyle}></Text>
+              <Ionicons name="close-circle-outline" size={35} color="grey" />
             </TouchableHighlight>
           </View>
 
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     // padding: 35,
     padding: 20,
     width: "90%",
-    height: "50%",
+    height: "auto",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalHead: {
-    backgroundColor: "lightgrey",
+    // backgroundColor: "lightgrey",
     width: "100%",
     flexDirection: "row",
     justifyContent: "flex-end",
